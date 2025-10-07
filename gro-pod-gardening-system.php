@@ -3,7 +3,7 @@
 Plugin Name: GRO Pod Gardening System
 Description: A comprehensive WordPress plugin that transforms your website into an interactive hydroponic gardening experience. Users can manage virtual plant pods, track growth progress, earn achievements, and engage with the community.
 Version: 2.1.3
-Author: Nadir Hussain
+Author: Danish Saleem
 Text Domain: gro-pod-gardening
 Requires at least: 5.0
 Tested up to: 6.4

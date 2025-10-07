@@ -177,7 +177,7 @@ This plugin is licensed under the GPL v2 or later.
 
 ## 🙏 Credits
 
-- **Developer**: Nadir Hussain
+- **Developer**: Danish Saleem
 - **Version**: 2.1.1
 - **Last Updated**: 2024
 
