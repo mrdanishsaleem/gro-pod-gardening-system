@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Intro Step Placeholder Generator</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        background: #f5f5f5;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+      }
+      .step {
+        margin-bottom: 30px;
+        padding: 20px;
+        border: 2px dashed #ccc;
+        border-radius: 10px;
+        text-align: center;
+      }
+      .step h3 {
+        color: #333;
+        margin-bottom: 10px;
+      }
+      .step p {
+        color: #666;
+        margin-bottom: 15px;
+      }
+      .placeholder {
+        width: 400px;
+        height: 250px;
+        background: linear-gradient(135deg, #598f95, #4a8285);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 18px;
+        font-weight: bold;
+        margin: 0 auto;
+      }
+      .download-btn {
+        background: #598f95;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 10px;
+      }
+      .download-btn:hover {
+        background: #4a8285;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Intro Step Placeholder Images</h1>
+      <p>
+        Right-click on each placeholder and "Save image as" to download them as
+        PNG files.
+      </p>
+
+      <div class="step">
+        <h3>Step 1: Add Plant to pod</h3>
+        <p>Choose from a variety of fresh plants</p>
+        <div class="placeholder" id="step1">🌱 Add Plant to Pod</div>
+        <button
+          class="download-btn"
+          onclick="downloadImage('step1', 'intro-step-1.png')"
+        >
+          Download Step 1
+        </button>
+      </div>
+
+      <div class="step">
+        <h3>Step 2: Log daily plant care</h3>
+        <p>Build your gardening streak</p>
+        <div class="placeholder" id="step2">📝 Log Daily Care</div>
+        <button
+          class="download-btn"
+          onclick="downloadImage('step2', 'intro-step-2.png')"
+        >
+          Download Step 2
+        </button>
+      </div>
+
+      <div class="step">
+        <h3>Step 3: Track Growth Progress</h3>
+        <p>Watch your plants grow day by day</p>
+        <div class="placeholder" id="step3">📈 Track Growth Progress</div>
+        <button
+          class="download-btn"
+          onclick="downloadImage('step3', 'intro-step-3.png')"
+        >
+          Download Step 3
+        </button>
+      </div>
+
+      <div class="step">
+        <h3>Step 4: Harvest Now</h3>
+        <p>Celebrate your harvest</p>
+        <div class="placeholder" id="step4">🎉 Harvest Now</div>
+        <button
+          class="download-btn"
+          onclick="downloadImage('step4', 'intro-step-4.png')"
+        >
+          Download Step 4
+        </button>
+      </div>
+
+      <div class="step">
+        <h3>Step 5: Ready to Grow again</h3>
+        <p>Your hydroponic garden is ready for the next cycle</p>
+        <div class="placeholder" id="step5">🚀 Ready to Grow Again</div>
+        <button
+          class="download-btn"
+          onclick="downloadImage('step5', 'intro-step-5.png')"
+        >
+          Download Step 5
+        </button>
+      </div>
+    </div>
+
+    <script>
+      function downloadImage(elementId, filename) {
+        const element = document.getElementById(elementId);
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+
+        // Set canvas size
+        canvas.width = 400;
+        canvas.height = 250;
+
+        // Create gradient background
+        const gradient = ctx.createLinearGradient(0, 0, 400, 250);
+        gradient.addColorStop(0, '#598f95');
+        gradient.addColorStop(1, '#4a8285');
+
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, 400, 250);
+
+        // Add text
+        ctx.fillStyle = 'white';
+        ctx.font = 'bold 18px Arial';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(element.textContent, 200, 125);
+
+        // Download
+        const link = document.createElement('a');
+        link.download = filename;
+        link.href = canvas.toDataURL();
+        link.click();
+      }
+    </script>
+  </body>
+</html>

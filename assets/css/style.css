@@ -1,0 +1,245 @@
+.tpgs-garden-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.pod {
+  display: flex;
+  height: 172px;
+  padding: 12px 16px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  flex: 1 0 0;
+  border-radius: 12px;
+  border: 1px solid var(--grey-200, #e9e6e9);
+  background: var(--light-bg, #f2f7f8);
+  box-shadow: 0 1px 2px 0 rgba(16, 24, 40, 0.04);
+}
+
+.pod.empty {
+  background-color: #f8f9fa;
+}
+
+.pod.growing {
+  border-color: #ffc107;
+  background-color: #fff3cd;
+}
+
+.pod.ready {
+  border-color: #28a745;
+  background-color: #d4edda;
+}
+
+.pod-number {
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.pod-status {
+  display: block;
+  margin-top: 5px;
+  font-size: 0.9em;
+}
+
+.vegetable-icon {
+  max-width: 50px;
+  max-height: 50px;
+  margin: 0 auto 10px;
+  display: block;
+}
+
+.vegetable-name {
+  font-weight: bold;
+  margin: 5px 0;
+}
+
+.days-remaining {
+  font-size: 0.9em;
+  color: #6c757d;
+}
+
+.text-success {
+  color: #28a745 !important;
+}
+
+.text-warning {
+  color: #ffc107 !important;
+}
+
+.text-danger {
+  color: #dc3545 !important;
+}
+
+.pods-grid.updating {
+  position: relative;
+  opacity: 0.7;
+}
+
+.pods-grid.updating::after {
+  content: "Updating...";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.pod-counter .active-count {
+  display: inline-block;
+  min-width: 20px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.pod-counter .active-count.updating {
+  transform: scale(1.2);
+  color: #28a745;
+}
+
+/* Badge Notifications */
+#badge-notifications-container {
+  max-width: 300px;
+}
+
+.badge-notification {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  margin-bottom: 1rem;
+}
+
+.badge-notification img {
+  border-radius: 50%;
+  border: 2px solid #fff;
+}
+
+/* Badges Section */
+.tpgs-badges-section {
+  background: #f8f9fa;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.badges-title {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.badges-title small {
+  font-size: 0.8em;
+  margin-left: auto;
+}
+
+.badges-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 15px;
+}
+
+.badge-item {
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.badge-item img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  border-radius: 50%;
+  border: 3px solid #28a745;
+  padding: 3px;
+  background: white;
+}
+
+.badge-item.locked img {
+  filter: grayscale(100%);
+  opacity: 0.7;
+  border-color: #ddd;
+}
+
+.locked-badge {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto;
+  background: #eee;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+  font-size: 1.5rem;
+}
+
+.badge-label {
+  display: block;
+  margin-top: 5px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.badge-item.locked .badge-label {
+  color: #999;
+}
+
+/* Tooltip customization */
+.tooltip {
+  font-family: inherit;
+}
+.tooltip-inner {
+  max-width: 200px;
+  padding: 8px 12px;
+  background: #333;
+}
+
+.streak-btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.streak-btn:hover {
+  background-color: #218838;
+}
+
+#streakModal .modal-body {
+  padding: 20px;
+}
+
+#streakModal .form-check {
+  margin-bottom: 10px;
+}
+
+#streakModal .form-check-label img {
+  vertical-align: middle;
+}
+
+.week-days {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+.day {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.streak-marked {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  color: green;
+  font-size: 1.2em;
+}

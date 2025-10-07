@@ -1,0 +1,108 @@
+/* Admin Styles for GRO Pod Gardening System */
+.wrap h1 {
+  margin-bottom: 20px;
+}
+
+#plants-list td,
+#plants-list th {
+  padding: 8px 10px;
+  vertical-align: middle;
+}
+
+#plants-list input[type='text'],
+#plants-list input[type='number'] {
+  margin: 0;
+}
+
+#plants-list .regular-text {
+  width: 100%;
+}
+
+#plants-list .small-text {
+  width: 80px;
+}
+
+.remove-vegetable {
+  margin-left: 5px;
+}
+
+.form-table th {
+  width: 200px;
+}
+
+/* Add new vegetable form */
+#new_vegetable_name,
+#new_vegetable_icon {
+  width: 100%;
+}
+
+#new_vegetable_duration {
+  width: 80px;
+}
+
+/* Error message styling */
+.notice-error {
+  margin: 5px 0 15px;
+  padding: 10px;
+}
+
+/* Vegetable configuration table styles */
+.tpgs-vegetable-table th, .tpgs-vegetable-table td {
+    vertical-align: middle;
+    padding: 10px;
+}
+.tpgs-vegetable-table td input {
+    width: 100%;
+    max-width: 300px;
+}
+.tpgs-action-input {
+    margin-bottom: 10px;
+}
+.tpgs-action-input label {
+    display: inline-block;
+    width: 150px;
+    font-weight: bold;
+}
+.tpgs-vegetable-form .required:after {
+    content: " *";
+    color: #dc3545;
+}
+.tpgs-action-row {
+    margin-bottom: 10px;
+}
+.tpgs-action-row label {
+    display: inline-block;
+    width: 150px;
+    font-weight: bold;
+}
+.tpgs-action-row input[type="text"] {
+    width: 200px;
+    margin-right: 10px;
+}
+.tpgs-action-row input[type="url"] {
+    width: 300px;
+    margin-right: 10px;
+}
+.tpgs-remove-action {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.tpgs-remove-action:hover {
+    background: #c82333;
+}
+.tpgs-add-action {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+.tpgs-add-action:hover {
+    background: #218838;
+}
