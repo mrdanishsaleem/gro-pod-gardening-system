@@ -179,7 +179,7 @@ This plugin is licensed under the GPL v2 or later.
 
 - **Developer**: Danish Saleem
 - **Version**: 2.1.1
-- **Last Updated**: 2024
+- **Last Updated**: 2025
 
 ---
 

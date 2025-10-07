@@ -533,8 +533,8 @@ jQuery(document).ready(function ($) {
     }
   });
 
-  $(document).on('click', '.plant-item', function () {
-    $('.plant-item').removeClass('selected');
+  $(document).on('click', '.vegetable-item', function () {
+    $('.vegetable-item').removeClass('selected');
     $(this).addClass('selected');
   });
 
@@ -595,10 +595,10 @@ jQuery(document).ready(function ($) {
 
   $('#confirmPlanting').on('click', function () {
     const podId = $('#plantingModal').data('pod-id');
-    const plantId = $('.plant-item.selected').data('plant-id');
+    const vegetableId = $('.vegetable-item.selected').data('vegetable-id');
 
-    if (!plantId) {
-      showAlert('Please select a plant to plant', 'error');
+    if (!vegetableId) {
+      showAlert('Please select a vegetable to plant', 'error');
       return;
     }
 
@@ -606,10 +606,10 @@ jQuery(document).ready(function ($) {
       url: tpgs_ajax.ajax_url,
       type: 'POST',
       data: {
-        action: 'tpgs_plant_plant',
+        action: 'tpgs_plant_vegetable',
         nonce: tpgs_ajax.nonce,
         pod_id: podId,
-        plant_id: plantId,
+        vegetable_id: vegetableId,
       },
       beforeSend: function () {
         $('#confirmPlanting').prop('disabled', true).text('Planting...');
@@ -1365,7 +1365,7 @@ jQuery(document).ready(function ($) {
       $('#introModal').modal('hide');
 
       // Optional: Show a welcome message
-      showAlert('Welcome to your GRO Pod Garden! 🌱', 'success');
+      showAlert('Welcome to your 12-Pod Garden! 🌱', 'success');
     }
   }
 

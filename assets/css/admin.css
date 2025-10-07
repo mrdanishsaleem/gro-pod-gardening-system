@@ -1,24 +1,24 @@
-/* Admin Styles for GRO Pod Gardening System */
+/* Admin Styles for 12-Pod Gardening System */
 .wrap h1 {
   margin-bottom: 20px;
 }
 
-#plants-list td,
-#plants-list th {
+#vegetables-list td,
+#vegetables-list th {
   padding: 8px 10px;
   vertical-align: middle;
 }
 
-#plants-list input[type='text'],
-#plants-list input[type='number'] {
+#vegetables-list input[type='text'],
+#vegetables-list input[type='number'] {
   margin: 0;
 }
 
-#plants-list .regular-text {
+#vegetables-list .regular-text {
   width: 100%;
 }
 
-#plants-list .small-text {
+#vegetables-list .small-text {
   width: 80px;
 }
 

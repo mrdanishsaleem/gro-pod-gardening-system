@@ -5,7 +5,7 @@ All notable changes to the GRO Pod Gardening System plugin will be documented in
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.1.1] - 2024-12-19
+## [2.1.1] - 2025-12-19
 
 ### Added
 - Comprehensive README.md documentation
@@ -72,7 +72,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Improved database query efficiency
 - Removed redundant code and functions
 
-## [2.0.0] - 2024-12-18
+## [2.0.0] - 2025-12-18
 
 ### Added
 - Complete rewrite of the plugin architecture
@@ -94,7 +94,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Improved responsive design
 - Enhanced user experience flow
 
-## [1.0.0] - 2024-12-17
+## [1.0.0] - 2025-12-17
 
 ### Added
 - Initial release

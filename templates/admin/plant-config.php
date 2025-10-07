@@ -1,18 +1,18 @@
 <div class="wrap">
-    <h1>GRO Pod Garden Management</h1>
+    <h1>GRO Pod Gardening System</h1>
 
     <?php if (isset($_GET['settings-updated'])): ?>
         <div class="notice notice-success is-dismissible">
-            <p>Plants updated successfully!</p>
+            <p>Vegetables updated successfully!</p>
         </div>
     <?php endif; ?>
 
     <form method="post" action="options.php">
-        <?php settings_fields('tpgs_plants_group'); ?>
-        <?php do_settings_sections('tpgs_plants_group'); ?>
+        <?php settings_fields('tpgs_vegetables_group'); ?>
+        <?php do_settings_sections('tpgs_vegetables_group'); ?>
 
-        <h2>Current Plants</h2>
-        <table class="form-table widefat tpgs-plant-table">
+        <h2>Current Vegetables</h2>
+        <table class="form-table widefat tpgs-vegetable-table">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -23,60 +23,60 @@
                     <th>Actions</th>
                 </tr>
             </thead>
-            <tbody id="plants-list">
+            <tbody id="vegetables-list">
                 <?php
-                $plants = TPGS_Plant_Manager::get_plants();
-                if (is_array($plants)):
-                    foreach ($plants as $plant):
-                        if (!is_array($plant)) continue; // Skip if not an array
+                $vegetables = TPGS_Vegetable_Manager::get_vegetables();
+                if (is_array($vegetables)):
+                    foreach ($vegetables as $vegetable):
+                        if (!is_array($vegetable)) continue; // Skip if not an array
                         ?>
                         <tr>
                             <td>
-                                <input type="hidden" name="tpgs_plants[<?php echo esc_attr($plant['id']); ?>][id]" value="<?php echo esc_attr($plant['id']); ?>">
-                                <input type="text" name="tpgs_plants[<?php echo esc_attr($plant['id']); ?>][name]" value="<?php echo esc_attr($plant['name']); ?>" class="regular-text">
+                                <input type="hidden" name="tpgs_vegetables[<?php echo esc_attr($vegetable['id']); ?>][id]" value="<?php echo esc_attr($vegetable['id']); ?>">
+                                <input type="text" name="tpgs_vegetables[<?php echo esc_attr($vegetable['id']); ?>][name]" value="<?php echo esc_attr($vegetable['name']); ?>" class="regular-text">
                             </td>
                             <td>
-                                <input type="text" name="tpgs_plants[<?php echo esc_attr($plant['id']); ?>][icon]" value="<?php echo esc_url($plant['icon']); ?>" class="regular-text">
+                                <input type="text" name="tpgs_vegetables[<?php echo esc_attr($vegetable['id']); ?>][icon]" value="<?php echo esc_url($vegetable['icon']); ?>" class="regular-text">
                             </td>
                             <td>
-                                <input type="text" name="tpgs_plants[<?php echo esc_attr($plant['id']); ?>][main_image]" value="<?php echo esc_url($plant['main_image']); ?>" class="regular-text">
+                                <input type="text" name="tpgs_vegetables[<?php echo esc_attr($vegetable['id']); ?>][main_image]" value="<?php echo esc_url($vegetable['main_image']); ?>" class="regular-text">
                             </td>
                             <td>
                                 <?php $actions = ['watered', 'fed-nutrients', 'checked-plant-health', 'took-progress-photo'];
                                 foreach ($actions as $action):
                                     $action_name = ucfirst(str_replace('-', ' ', $action));
-                                    $value = isset($plant['action_images'][$action]) ? $plant['action_images'][$action] : '';
+                                    $value = isset($vegetable['action_images'][$action]) ? $vegetable['action_images'][$action] : '';
                                     ?>
                                     <div class="tpgs-action-input">
                                         <label><?php echo esc_html($action_name); ?></label>
-                                        <input type="text" name="tpgs_plants[<?php echo esc_attr($plant['id']); ?>][action_images][<?php echo $action; ?>]" value="<?php echo esc_url($value); ?>" class="regular-text">
+                                        <input type="text" name="tpgs_vegetables[<?php echo esc_attr($vegetable['id']); ?>][action_images][<?php echo $action; ?>]" value="<?php echo esc_url($value); ?>" class="regular-text">
                                     </div>
                                 <?php endforeach; ?>
                             </td>
                             <td>
-                                <input type="number" name="tpgs_plants[<?php echo esc_attr($plant['id']); ?>][growth_duration]" value="<?php echo esc_attr($plant['growth_duration']); ?>" min="1" class="small-text">
+                                <input type="number" name="tpgs_vegetables[<?php echo esc_attr($vegetable['id']); ?>][growth_duration]" value="<?php echo esc_attr($vegetable['growth_duration']); ?>" min="1" class="small-text">
                             </td>
                             <td>
-                                <button type="button" class="button button-secondary remove-plant">Remove</button>
+                                <button type="button" class="button button-secondary remove-vegetable">Remove</button>
                             </td>
                         </tr>
                     <?php endforeach; endif; ?>
             </tbody>
         </table>
 
-        <h2>Add New Plant</h2>
-        <table class="form-table tpgs-plant-form">
+        <h2>Add New Vegetable</h2>
+        <table class="form-table tpgs-vegetable-form">
             <tr>
-                <th scope="row"><label for="new_plant_name" class="required">Name</label></th>
-                <td><input type="text" id="new_plant_name" class="regular-text"></td>
+                <th scope="row"><label for="new_vegetable_name" class="required">Name</label></th>
+                <td><input type="text" id="new_vegetable_name" class="regular-text"></td>
             </tr>
             <tr>
-                <th scope="row"><label for="new_plant_icon" class="required">Icon URL</label></th>
-                <td><input type="text" id="new_plant_icon" class="regular-text"></td>
+                <th scope="row"><label for="new_vegetable_icon" class="required">Icon URL</label></th>
+                <td><input type="text" id="new_vegetable_icon" class="regular-text"></td>
             </tr>
             <tr>
-                <th scope="row"><label for="new_plant_main_image" class="required">Main Image URL</label></th>
-                <td><input type="text" id="new_plant_main_image" class="regular-text"></td>
+                <th scope="row"><label for="new_vegetable_main_image" class="required">Main Image URL</label></th>
+                <td><input type="text" id="new_vegetable_main_image" class="regular-text"></td>
             </tr>
             <tr>
                 <th scope="row"><label class="required">Action Images</label></th>
@@ -85,19 +85,19 @@
                     foreach ($default_actions as $action) :
                         $action_key = sanitize_title($action); ?>
                         <div class="tpgs-action-row">
-                            <label for="new_plant_action_<?php echo $action_key; ?>"><?php echo esc_html($action); ?></label>
-                            <input type="text" id="new_plant_action_<?php echo $action_key; ?>" class="regular-text" data-action="<?php echo $action_key; ?>">
+                            <label for="new_vegetable_action_<?php echo $action_key; ?>"><?php echo esc_html($action); ?></label>
+                            <input type="text" id="new_vegetable_action_<?php echo $action_key; ?>" class="regular-text" data-action="<?php echo $action_key; ?>">
                         </div>
                     <?php endforeach; ?>
                 </td>
             </tr>
             <tr>
-                <th scope="row"><label for="new_plant_duration" class="required">Growth Duration (days)</label></th>
-                <td><input type="number" id="new_plant_duration" min="1" class="small-text"></td>
+                <th scope="row"><label for="new_vegetable_duration" class="required">Growth Duration (days)</label></th>
+                <td><input type="number" id="new_vegetable_duration" min="1" class="small-text"></td>
             </tr>
             <tr>
                 <th scope="row"></th>
-                <td><button type="button" id="add_plant" class="button button-primary">Add Plant</button></td>
+                <td><button type="button" id="add_vegetable" class="button button-primary">Add Vegetable</button></td>
             </tr>
         </table>
 

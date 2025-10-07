@@ -24,7 +24,7 @@ if ($delete_data) {
     }
     
     // Delete options
-    delete_option('tpgs_plants');
+    delete_option('tpgs_vegetables');
     delete_option('tpgs_delete_data_on_uninstall');
     
     // Clear any scheduled events

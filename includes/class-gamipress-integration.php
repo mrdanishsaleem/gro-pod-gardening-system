@@ -21,14 +21,14 @@ class TPGS_Gamipress_Integration
      */
     public function register_triggers($triggers)
     {
-        $triggers['GRO Pod Gardening'] = [
-            'tpgs_plant_pod' => __('Plant a pod', 'gro-pod-gardening'),
-            'tpgs_harvest_pod' => __('Harvest a pod', 'gro-pod-gardening'),
-            'tpgs_log_care' => __('Log plant care', 'gro-pod-gardening'),
-            'tpgs_view_recipe' => __('View recipe page', 'gro-pod-gardening'),
-            'create_community_post' => __('Create community post', 'gro-pod-gardening'),
-            'comment_on_community_post' => __('Comment on community post', 'gro-pod-gardening'),
-            'share_community_tip' => __('Share community tip', 'gro-pod-gardening')
+        $triggers['12-Pod Gardening'] = [
+            'tpgs_plant_pod' => __('Plant a pod', 'twelve-pod-gardening'),
+            'tpgs_harvest_pod' => __('Harvest a pod', 'twelve-pod-gardening'),
+            'tpgs_log_care' => __('Log plant care', 'twelve-pod-gardening'),
+            'tpgs_view_recipe' => __('View recipe page', 'twelve-pod-gardening'),
+            'create_community_post' => __('Create community post', 'twelve-pod-gardening'),
+            'comment_on_community_post' => __('Comment on community post', 'twelve-pod-gardening'),
+            'share_community_tip' => __('Share community tip', 'twelve-pod-gardening')
         ];
         return $triggers;
     }

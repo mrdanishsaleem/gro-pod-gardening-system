@@ -4,7 +4,7 @@ class TPGS_Pod_Manager
 
     public function __construct()
     {
-        add_action('wp_ajax_tpgs_plant_plant', array($this, 'plant_plant'));
+        add_action('wp_ajax_tpgs_plant_vegetable', array($this, 'plant_vegetable'));
         add_action('wp_ajax_tpgs_update_pod_date', array($this, 'update_pod_date'));
         add_action('wp_ajax_tpgs_reset_pod', array($this, 'reset_pod'));
         add_action('wp_ajax_tpgs_get_pod_details', array($this, 'get_pod_details'));
@@ -47,7 +47,7 @@ class TPGS_Pod_Manager
                 }
             } else {
                 $pod_data = array(
-                    'plant_id' => 0,
+                    'vegetable_id' => 0,
                     'date_planted' => '',
                     'days_remaining' => 0,
                     'status' => 'empty'
@@ -98,7 +98,7 @@ class TPGS_Pod_Manager
         $pod_data = get_user_meta($user_id, 'tpgs_pod_' . $pod_id, true);
         if (empty($pod_data)) {
             $pod_data = array(
-                'plant_id' => 0,
+                'vegetable_id' => 0,
                 'date_planted' => '',
                 'days_remaining' => 0,
                 'status' => 'empty'
@@ -148,7 +148,7 @@ class TPGS_Pod_Manager
     //     }
     // }
 
-    public function plant_plant()
+    public function plant_vegetable()
     {
         check_ajax_referer('tpgs_nonce', 'nonce');
 
@@ -158,13 +158,13 @@ class TPGS_Pod_Manager
 
         $user_id = get_current_user_id();
         $pod_id = isset($_POST['pod_id']) ? intval($_POST['pod_id']) : 0;
-        $plant_id = isset($_POST['plant_id']) ? intval($_POST['plant_id']) : 0;
+        $vegetable_id = isset($_POST['vegetable_id']) ? intval($_POST['vegetable_id']) : 0;
 
         if ($pod_id < 1 || $pod_id > 12) {
             wp_send_json_error('Invalid pod ID');
         }
 
-        $vegetable = TPGS_Plant_Manager::get_plant($plant_id);
+        $vegetable = TPGS_Vegetable_Manager::get_vegetable($vegetable_id);
         if (!$vegetable) {
             wp_send_json_error('Invalid vegetable');
         }
@@ -177,7 +177,7 @@ class TPGS_Pod_Manager
 
         // Update pod data
         $pod_data = array(
-            'plant_id' => $plant_id,
+            'vegetable_id' => $vegetable_id,
             'date_planted' => current_time('mysql'),
             'days_remaining' => $vegetable['growth_duration'],
             'status' => 'growing',  // Make sure this is set to 'growing'
@@ -298,7 +298,7 @@ class TPGS_Pod_Manager
             wp_send_json_error('Pod is empty', 400);
         }
 
-        $vegetable = TPGS_Plant_Manager::get_plant($pod_data['plant_id']);
+        $vegetable = TPGS_Vegetable_Manager::get_vegetable($pod_data['vegetable_id']);
         if (!$vegetable) {
             wp_send_json_error('Invalid vegetable in pod', 400);
         }
@@ -313,7 +313,7 @@ class TPGS_Pod_Manager
 
             // Trigger notification if status changed to ready
             if ($pod_data['status'] !== 'ready') {
-                TPGS_Notifications::send_harvest_notification($user_id, $pod_id, $pod_data['plant_id']);
+                TPGS_Notifications::send_harvest_notification($user_id, $pod_id, $pod_data['vegetable_id']);
             }
         } else {
             $status = 'growing';
@@ -368,7 +368,7 @@ class TPGS_Pod_Manager
 
         // Clear the pod after harvesting
         $empty_pod = array(
-            'plant_id' => 0,
+            'vegetable_id' => 0,
             'date_planted' => '',
             'days_remaining' => 0,
             'status' => 'empty'
@@ -421,7 +421,7 @@ class TPGS_Pod_Manager
 
         // Reset pod
         $empty_pod = array(
-            'plant_id' => 0,
+            'vegetable_id' => 0,
             'date_planted' => '',
             'days_remaining' => 0,
             'status' => 'empty'
@@ -572,7 +572,7 @@ class TPGS_Pod_Manager
     }
 
     /**
-     * Grow Expert: Harvest 4 plants (any pods)
+     * Grow Expert: Harvest 4 vegetables (any pods)
      */
     public function check_grow_expert($user_id)
     {
@@ -648,7 +648,7 @@ class TPGS_Pod_Manager
             'tending-with-care' => 'Log plant care activities on 3 different days to unlock this badge!',
             'harvest-hero' => 'Harvest your first vegetable to unlock this badge!',
             'taste-the-triumph' => 'Visit any recipe page in the Learn section to unlock this badge!',
-            'grow-expert' => 'Harvest 4 plants (from any pods) to unlock this badge!',
+            'grow-expert' => 'Harvest 4 vegetables (from any pods) to unlock this badge!',
             'community-cultivator' => 'Complete any 2 community actions: create a post, comment, or share a tip!'
         ];
 
@@ -705,7 +705,7 @@ class TPGS_Pod_Manager
 
         $user_id = get_current_user_id();
         $stored_pod_data = get_user_meta($user_id, 'tpgs_pod_' . $pod_id, true); // Fetch latest from DB
-        $pod_data = !empty($stored_pod_data) ? $stored_pod_data : ($pod_data ?: ['status' => 'empty', 'plant_id' => 0, 'days_remaining' => 0]);
+        $pod_data = !empty($stored_pod_data) ? $stored_pod_data : ($pod_data ?: ['status' => 'empty', 'vegetable_id' => 0, 'days_remaining' => 0]);
 
         // Calculate current days remaining for active pods
         if ($pod_data['status'] !== 'empty') {
@@ -717,7 +717,7 @@ class TPGS_Pod_Manager
             }
         }
 
-        $vegetable = $pod_data['plant_id'] ? TPGS_Plant_Manager::get_plant($pod_data['plant_id']) : false;
+        $vegetable = $pod_data['vegetable_id'] ? TPGS_Vegetable_Manager::get_vegetable($pod_data['vegetable_id']) : false;
         $status = $pod_data['status'] ?? 'empty';
         $status_class = $status === 'empty' ? 'empty-pod' : 'active-pod';
 
@@ -782,7 +782,7 @@ class TPGS_Pod_Manager
 
         foreach ($pods as $pod) {
             if ($pod['status'] === 'growing') {
-                $vegetable = TPGS_Plant_Manager::get_plant($pod['plant_id']);
+                $vegetable = TPGS_Vegetable_Manager::get_vegetable($pod['vegetable_id']);
                 if ($vegetable && (!$next_harvest || $pod['days_remaining'] < $next_harvest['days'])) {
                     $next_harvest = [
                         'name' => $vegetable['name'],
@@ -822,7 +822,7 @@ class TPGS_Pod_Manager
         $updated = false;
         $pod_id = $pods[0]; // Use the first pod for response
         $pod_data = get_user_meta($user_id, 'tpgs_pod_' . $pod_id, true);
-        $vegetable = $pod_data['plant_id'] ? TPGS_Plant_Manager::get_plant($pod_data['plant_id']) : false;
+        $vegetable = $pod_data['vegetable_id'] ? TPGS_Vegetable_Manager::get_vegetable($pod_data['vegetable_id']) : false;
 
         if (empty($pod_data) || $pod_data['status'] !== 'growing' || !$vegetable) {
             wp_send_json_error('Pod is not in growing state or invalid vegetable');
@@ -919,7 +919,7 @@ class TPGS_Pod_Manager
         $updated = false;
         $pod_id = $pods[0]; // Use the first pod for response
         $pod_data = get_user_meta($user_id, 'tpgs_pod_' . $pod_id, true);
-        $vegetable = $pod_data['plant_id'] ? TPGS_Plant_Manager::get_plant($pod_data['plant_id']) : false;
+        $vegetable = $pod_data['vegetable_id'] ? TPGS_Vegetable_Manager::get_vegetable($pod_data['vegetable_id']) : false;
 
         if (empty($pod_data) || $pod_data['status'] !== 'growing' || !$vegetable) {
             wp_send_json_error('Pod is not in growing state or invalid vegetable');
@@ -1101,10 +1101,10 @@ class TPGS_Pod_Manager
 
         $user_id = get_current_user_id();
         $pods = $this->get_user_pods($user_id);
-        $plants = TPGS_Plant_Manager::get_plants();
+        $vegetables = TPGS_Vegetable_Manager::get_vegetables();
 
-        if (empty($pods) || empty($plants)) {
-            wp_send_json_error('No pods or plants available');
+        if (empty($pods) || empty($vegetables)) {
+            wp_send_json_error('No pods or vegetables available');
             return;
         }
 
@@ -1133,7 +1133,7 @@ class TPGS_Pod_Manager
                         <div id="streakPodSelect" class="pod-selection-grid">
                             <?php foreach ($pods as $pod_id => $pod_data):
                                 if ($pod_data['status'] === 'growing') {
-                                    $vegetable = TPGS_Plant_Manager::get_plant($pod_data['plant_id']);
+                                    $vegetable = TPGS_Vegetable_Manager::get_vegetable($pod_data['vegetable_id']);
                                     if ($vegetable && !empty($vegetable['icon'])): ?>
                                         <div class="pod-option">
                                             <input class="pod-radio" type="radio" name="streak_pods" value="<?php echo $pod_id; ?>"
@@ -1162,7 +1162,7 @@ class TPGS_Pod_Manager
                             <?php
                             $pod_id = $selected_pod_id ?: $first_growing_pod;
                             $pod_data = $pods[$pod_id];
-                            $vegetable = $pod_data['plant_id'] ? TPGS_Plant_Manager::get_plant($pod_data['plant_id']) : false;
+                            $vegetable = $pod_data['vegetable_id'] ? TPGS_Vegetable_Manager::get_vegetable($pod_data['vegetable_id']) : false;
                             $default_actions = $vegetable['actions'] ?? ['Watered', 'Harvested', 'Fed nutrients', 'Checked plant health', 'Took progress photo'];
                             foreach ($default_actions as $action):
                                 $action_key = sanitize_title($action);
@@ -1230,7 +1230,7 @@ class TPGS_Pod_Manager
             return 0;
         }
 
-        $vegetable = TPGS_Plant_Manager::get_plant($pod_data['plant_id']);
+        $vegetable = TPGS_Vegetable_Manager::get_vegetable($pod_data['vegetable_id']);
         if (!$vegetable) {
             return 0;
         }
@@ -1266,7 +1266,7 @@ class TPGS_Pod_Manager
                 $pod_data['status'] = 'ready';
 
                 // Send notification if status changed to ready
-                TPGS_Notifications::send_harvest_notification($user_id, $i, $pod_data['plant_id']);
+                TPGS_Notifications::send_harvest_notification($user_id, $i, $pod_data['vegetable_id']);
             }
 
             // Update the pod

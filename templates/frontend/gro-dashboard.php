@@ -3,7 +3,7 @@
 $user_id = get_current_user_id();
 $pods = isset($pods) ? $pods : TPGS_Pod_Manager::get_user_pods($user_id);
 $next_harvest = TPGS_Pod_Manager::get_next_harvest($user_id);
-$plants = isset($plants) ? $plants : TPGS_Plant_Manager::get_plants();
+$vegetables = isset($vegetables) ? $vegetables : TPGS_Vegetable_Manager::get_vegetables();
 $badges = isset($badges) ? $badges : (class_exists('GamiPress') ? [
     'all' => gamipress_get_achievements([
         'post_type' => 'gardening_badges',
@@ -175,14 +175,14 @@ $badges = isset($badges) ? $badges : (class_exists('GamiPress') ? [
             </div>
             <div class="modal-body">
                 <h6 class="modal-subtitle">Choose what to plant</h6>
-                <div class="plants-grid">
-                    <?php foreach ($plants as $plant): ?>
-                        <div class="plant-item" data-plant-id="<?php echo $plant['id']; ?>">
-                            <?php if (!empty($plant['icon'])): ?>
-                                <img src="<?php echo esc_url($plant['icon']); ?>"
-                                    alt="<?php echo esc_attr($plant['name']); ?>" class="plant-icon">
+                <div class="vegetables-grid">
+                    <?php foreach ($vegetables as $vegetable): ?>
+                        <div class="vegetable-item" data-vegetable-id="<?php echo $vegetable['id']; ?>">
+                            <?php if (!empty($vegetable['icon'])): ?>
+                                <img src="<?php echo esc_url($vegetable['icon']); ?>"
+                                    alt="<?php echo esc_attr($vegetable['name']); ?>" class="vegetable-icon">
                             <?php endif; ?>
-                            <div class="plant-name"><?php echo esc_html($plant['name']); ?></div>
+                            <div class="vegetable-name"><?php echo esc_html($vegetable['name']); ?></div>
                         </div>
                     <?php endforeach; ?>
                 </div>
@@ -224,8 +224,8 @@ $badges = isset($badges) ? $badges : (class_exists('GamiPress') ? [
 
                 <!-- Harvest Description -->
                 <p class="harvest-description mb-4" id="harvestDescription">
-                    Look at that growth—your <?php echo strtolower(esc_html($plant['name'])); ?> is thriving!
-                    <img src="<?php echo esc_url($plant['icon']); ?>" alt="<?php echo esc_attr($plant['name']); ?>" class="success-icon">
+                    Look at that growth—your <?php echo strtolower(esc_html($vegetable['name'])); ?> is thriving!
+                    <img src="<?php echo esc_url($vegetable['icon']); ?>" alt="<?php echo esc_attr($vegetable['name']); ?>" class="success-icon">
                 </p>
                 </p>
 

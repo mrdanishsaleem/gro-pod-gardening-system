@@ -1,20 +1,9 @@
 <?php
 /*
 Plugin Name: GRO Pod Gardening System
-Description: A comprehensive WordPress plugin that transforms your website into an interactive hydroponic gardening experience. Users can manage virtual plant pods, track growth progress, earn achievements, and engage with the community.
-Version: 2.1.3
+Description: A digital plant pod management system for WordPress.
+Version: 2.1.2
 Author: Danish Saleem
-Text Domain: gro-pod-gardening
-Requires at least: 5.0
-Tested up to: 6.4
-Requires PHP: 7.4
-License: GPL v2 or later
-License URI: https://www.gnu.org/licenses/gpl-2.0.html
-Network: false
-
-Documentation: See README.md for detailed usage instructions
-Installation: See INSTALL.md for setup guide
-Changelog: See CHANGELOG.md for version history
 */
 
 if (!defined('ABSPATH')) {
@@ -26,7 +15,7 @@ define('TPGS_PLUGIN_URL', plugin_dir_url(__FILE__));
 
 // Load required files
 require_once TPGS_PLUGIN_DIR . 'includes/class-pod-manager.php';
-require_once TPGS_PLUGIN_DIR . 'includes/class-plant-manager.php';
+require_once TPGS_PLUGIN_DIR . 'includes/class-vegetable-manager.php';
 require_once TPGS_PLUGIN_DIR . 'includes/class-notifications.php';
 require_once TPGS_PLUGIN_DIR . 'includes/class-cron-handler.php';
 require_once TPGS_PLUGIN_DIR . 'includes/class-shortcodes.php';
@@ -52,7 +41,7 @@ class GRO_Pod_Gardening_System
     private function init_components()
     {
         new TPGS_Pod_Manager();
-        new TPGS_Plant_Manager();
+        new TPGS_Vegetable_Manager();
         new TPGS_Notifications();
         new TPGS_Cron_Handler();
         new TPGS_Shortcodes();
@@ -84,7 +73,7 @@ class GRO_Pod_Gardening_System
         if (!current_user_can('activate_plugins')) {
             return;
         }
-        TPGS_Plant_Manager::setup_default_plants();
+        TPGS_Vegetable_Manager::setup_default_vegetables();
         if (!wp_next_scheduled('tpgs_daily_growth_tracker')) {
             wp_schedule_event(time(), 'daily', 'tpgs_daily_growth_tracker');
         }
@@ -158,7 +147,7 @@ class GRO_Pod_Gardening_System
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('tpgs_nonce'),
             'user_id' => get_current_user_id(),
-            'plants' => TPGS_Plant_Manager::get_plants(),
+            'vegetables' => TPGS_Vegetable_Manager::get_vegetables(),
             'is_new_user' => self::is_new_user()
         ));
     }
@@ -166,7 +155,7 @@ class GRO_Pod_Gardening_System
     public function enqueue_admin_assets($hook)
     {
         // Check if we're on our plugin page by checking the hook contains our slug
-        if (strpos($hook, 'tpgs_plants_config') !== false) {
+        if (strpos($hook, 'tpgs_vegetables_config') !== false) {
             wp_enqueue_style('tpgs-admin-styles', TPGS_PLUGIN_URL . 'assets/css/admin.css');
             wp_enqueue_script('tpgs-admin-scripts', TPGS_PLUGIN_URL . 'assets/js/admin.js', array('jquery'), null, true);
         }

@@ -237,7 +237,7 @@
 }
 
 /* Planting Modal */
-.plants-grid,
+.vegetables-grid,
 /* Streak Modal */
 #streakPodSelect {
   --variable-min-col-width: min(210px, 100%);
@@ -248,7 +248,7 @@
   );
 }
 
-.plants-grid {
+.vegetables-grid {
   gap: 24px;
 }
 
@@ -488,7 +488,7 @@ hover for that for now */
 }
 
 @media (max-width: 768px) {
-  .plants-grid,
+  .vegetables-grid,
   #streakPodSelect,
   #streakActions {
     gap: 16px;

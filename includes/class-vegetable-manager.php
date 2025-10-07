@@ -1,8 +1,8 @@
 <?php
-class TPGS_Plant_Manager
+class TPGS_Vegetable_Manager
 {
 
-    private static $plants_option = 'tpgs_plants';
+    private static $vegetables_option = 'tpgs_vegetables';
 
     public function __construct()
     {
@@ -10,14 +10,14 @@ class TPGS_Plant_Manager
         add_action('admin_init', array($this, 'register_settings'));
     }
 
-    public static function setup_default_plants()
+    public static function setup_default_vegetables()
     {
-        $default_plants = array(
+        $default_vegetables = array(
             array(
                 'id' => 1,
                 'name' => 'Tomato',
-                'icon' => TPGS_PLUGIN_URL . 'assets/images/plants/tomato.png',
-                'main_image' => TPGS_PLUGIN_URL . 'assets/images/plants/tomato_main.png',
+                'icon' => TPGS_PLUGIN_URL . 'assets/images/vegetables/tomato.png',
+                'main_image' => TPGS_PLUGIN_URL . 'assets/images/vegetables/tomato_main.png',
                 'action_images' => [
                     'watered' => TPGS_PLUGIN_URL . 'assets/images/actions/watering.png',
                     'fed-nutrients' => TPGS_PLUGIN_URL . 'assets/images/actions/nutrients.png',
@@ -30,8 +30,8 @@ class TPGS_Plant_Manager
             array(
                 'id' => 2,
                 'name' => 'Carrot',
-                'icon' => TPGS_PLUGIN_URL . 'assets/images/plants/carrot.png',
-                'main_image' => TPGS_PLUGIN_URL . 'assets/images/plants/carrot_main.png',
+                'icon' => TPGS_PLUGIN_URL . 'assets/images/vegetables/carrot.png',
+                'main_image' => TPGS_PLUGIN_URL . 'assets/images/vegetables/carrot_main.png',
                 'action_images' => [
                     'watered' => TPGS_PLUGIN_URL . 'assets/images/actions/watering.png',
                     'fed-nutrients' => TPGS_PLUGIN_URL . 'assets/images/actions/nutrients.png',
@@ -43,8 +43,8 @@ class TPGS_Plant_Manager
             array(
                 'id' => 3,
                 'name' => 'Lettuce',
-                'icon' => TPGS_PLUGIN_URL . 'assets/images/plants/lettuce.png',
-                'main_image' => TPGS_PLUGIN_URL . 'assets/images/plants/lettuce_main.png',
+                'icon' => TPGS_PLUGIN_URL . 'assets/images/vegetables/lettuce.png',
+                'main_image' => TPGS_PLUGIN_URL . 'assets/images/vegetables/lettuce_main.png',
                 'action_images' => [
                     'watered' => TPGS_PLUGIN_URL . 'assets/images/actions/watering.png',
                     'fed-nutrients' => TPGS_PLUGIN_URL . 'assets/images/actions/nutrients.png',
@@ -55,23 +55,23 @@ class TPGS_Plant_Manager
             )
         );
 
-        if (false === get_option(self::$plants_option)) {
-            update_option(self::$plants_option, $default_plants);
+        if (false === get_option(self::$vegetables_option)) {
+            update_option(self::$vegetables_option, $default_vegetables);
         }
     }
 
-    public static function get_plants()
+    public static function get_vegetables()
     {
-        return get_option(self::$plants_option, array());
+        return get_option(self::$vegetables_option, array());
     }
 
-    public static function get_plant($id)
+    public static function get_vegetable($id)
     {
-        $plants = self::get_plants();
+        $vegetables = self::get_vegetables();
 
-        foreach ($plants as $plant) {
-            if ($plant['id'] == $id) {
-                return $plant;
+        foreach ($vegetables as $vegetable) {
+            if ($vegetable['id'] == $id) {
+                return $vegetable;
             }
         }
 
@@ -82,22 +82,22 @@ class TPGS_Plant_Manager
     {
         // Add main menu item
         add_menu_page(
-            'GRO Pod Garden Management', // Page title
-            'GRO Pod Garden', // Menu title
+            '12-Pod Gardening System', // Page title
+            'Garden System', // Menu title
             'manage_options', // Capability
-            'tpgs_plants_config', // Menu slug
+            'tpgs_vegetables_config', // Menu slug
             array($this, 'render_admin_page'), // Callback function
             'dashicons-palmtree', // Icon (you can change this)
             30 // Position in menu
         );
 
-        // Add submenu for plants (optional - keeps the same page but under main menu)
+        // Add submenu for vegetables (optional - keeps the same page but under main menu)
         add_submenu_page(
-            'tpgs_plants_config', // Parent slug
-            'Plant Configuration', // Page title
-            'Plant Configuration', // Menu title
+            'tpgs_vegetables_config', // Parent slug
+            'Garden Vegetables', // Page title
+            'Vegetables', // Menu title
             'manage_options', // Capability
-            'tpgs_plants_config', // Menu slug (same as parent)
+            'tpgs_vegetables_config', // Menu slug (same as parent)
             array($this, 'render_admin_page') // Callback function
         );
     }
@@ -105,20 +105,20 @@ class TPGS_Plant_Manager
     public function register_settings()
     {
         register_setting(
-            'tpgs_plants_group',
-            self::$plants_option,
-            array($this, 'sanitize_plants')
+            'tpgs_vegetables_group',
+            self::$vegetables_option,
+            array($this, 'sanitize_vegetables')
         );
     }
 
-    public function sanitize_plants($input) {
+    public function sanitize_vegetables($input) {
     $sanitized = array();
 
     if (!is_array($input)) {
         return $sanitized;
     }
 
-    // Use array_values to ensure we get all plants regardless of array keys
+    // Use array_values to ensure we get all vegetables regardless of array keys
     foreach (array_values($input) as $vegetable) {
         if (!is_array($vegetable)) {
             continue; // Skip if not an array
@@ -143,16 +143,16 @@ class TPGS_Plant_Manager
             return;
         }
 
-        $plants = self::get_plants();
-        $next_id = !empty($plants) ? max(array_column($plants, 'id')) + 1 : 1;
+        $vegetables = self::get_vegetables();
+        $next_id = !empty($vegetables) ? max(array_column($vegetables, 'id')) + 1 : 1;
 
         include TPGS_PLUGIN_DIR . 'templates/admin/plant-config.php';
     }
 
     public static function add_vegetable($name, $icon, $growth_duration)
     {
-        $plants = self::get_plants();
-        $next_id = !empty($plants) ? max(array_column($plants, 'id')) + 1 : 1;
+        $vegetables = self::get_vegetables();
+        $next_id = !empty($vegetables) ? max(array_column($vegetables, 'id')) + 1 : 1;
 
         $new_vegetable = array(
             'id' => $next_id,
@@ -161,22 +161,22 @@ class TPGS_Plant_Manager
             'growth_duration' => $growth_duration
         );
 
-        $plants[] = $new_vegetable;
+        $vegetables[] = $new_vegetable;
 
-        return update_option(self::$plants_option, $plants);
+        return update_option(self::$vegetables_option, $vegetables);
     }
 
     public static function delete_vegetable($id)
     {
-        $plants = self::get_plants();
-        $updated_plants = array();
+        $vegetables = self::get_vegetables();
+        $updated_vegetables = array();
 
-        foreach ($plants as $vegetable) {
+        foreach ($vegetables as $vegetable) {
             if ($vegetable['id'] != $id) {
-                $updated_plants[] = $vegetable;
+                $updated_vegetables[] = $vegetable;
             }
         }
 
-        return update_option(self::$plants_option, $updated_plants);
+        return update_option(self::$vegetables_option, $updated_vegetables);
     }
 }
